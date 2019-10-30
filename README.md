@@ -12,7 +12,7 @@ Library to calculate Python functions cognitive complexity via code.
 
     pip install cognitive_complexity
 
-    Tested on python 3.7.
+Tested on python 3.7.
 
 ## Usage
 
