@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/Melevir/cognitive_complexity.svg?branch=master)](https://travis-ci.org/Melevir/cognitive_complexity)
 [![Maintainability](https://api.codeclimate.com/v1/badges/853d47d353e7becc9f09/maintainability)](https://codeclimate.com/github/Melevir/cognitive_complexity/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/853d47d353e7becc9f09/test_coverage)](https://codeclimate.com/github/Melevir/cognitive_complexity/test_coverage)
+[![PyPI version](https://badge.fury.io/py/cognitive-complexity.svg)](https://badge.fury.io/py/cognitive-complexity)
 
 Library to calculate Python functions cognitive complexity via code.
 
