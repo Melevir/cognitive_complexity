@@ -41,7 +41,8 @@ Here are some readings about cognitive complexity:
 
 ## Realization details
 
-This is not precise realization of original algorithm proposed by SonarSource,
+This is not precise realization of original algorithm
+proposed by [G. Ann Campbell](https://github.com/ganncamp),
 but it gives rather similar results.
 The algorithm gives complexity points for breaking control flow, nesting,
 recursion, stacks logic operation etc.
