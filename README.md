@@ -4,6 +4,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/853d47d353e7becc9f09/maintainability)](https://codeclimate.com/github/Melevir/cognitive_complexity/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/853d47d353e7becc9f09/test_coverage)](https://codeclimate.com/github/Melevir/cognitive_complexity/test_coverage)
 [![PyPI version](https://badge.fury.io/py/cognitive-complexity.svg)](https://badge.fury.io/py/cognitive-complexity)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/cognitive-complexity)
 
 Library to calculate Python functions cognitive complexity via code.
 
