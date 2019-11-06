@@ -1,6 +1,6 @@
 import ast
 
-from typing import Callable
+from typing import Callable, Tuple
 
 from cognitive_complexity.common_types import AnyFuncdef
 
@@ -38,3 +38,34 @@ def process_child_nodes(
             verbose=verbose,
         )
     return child_complexity
+
+
+def process_node_itself(
+    node: ast.AST,
+    increment_by: int,
+) -> Tuple[int, int, bool]:
+    control_flow_breakers = (
+        ast.If,
+        ast.For,
+        ast.While,
+        ast.IfExp,
+    )
+    incrementers_nodes = (
+        ast.FunctionDef,
+        ast.AsyncFunctionDef,
+        ast.Lambda,
+    )
+
+    if isinstance(node, control_flow_breakers):
+        increment_by += 1
+        return increment_by, max(1, increment_by), True
+    elif isinstance(node, incrementers_nodes):
+        increment_by += 1
+        return increment_by, 0, True
+    elif isinstance(node, ast.BoolOp):
+        inner_boolops_amount = len([n for n in ast.walk(node) if isinstance(n, ast.BoolOp)])
+        base_complexity = inner_boolops_amount * max(increment_by, 1)
+        return increment_by, base_complexity, False
+    elif isinstance(node, (ast.Break, ast.Continue)):
+        return increment_by, max(1, increment_by), True
+    return increment_by, 0, True
