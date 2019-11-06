@@ -48,3 +48,22 @@ proposed by [G. Ann Campbell](https://github.com/ganncamp),
 but it gives rather similar results.
 The algorithm gives complexity points for breaking control flow, nesting,
 recursion, stacks logic operation etc.
+
+## Contributing
+
+We would love you to contribute to our project. It's simple:
+
+- Create an issue with bug you found or proposal you have. Wait for
+  approve from maintainer.
+- Create a pull request. Make sure all checks are green.
+- Fix review comments if any.
+- Be awesome.
+
+Here are useful tips:
+
+- You can run all checks and tests with `make check`. Please do it
+  before TravisCI does.
+- We use [BestDoctor python styleguide](https://github.com/best-doctor/guides/blob/master/guides/python_styleguide.md).
+  Sorry, styleguide is available only in Russian for now.
+- We respect [Django CoC](https://www.djangoproject.com/conduct/).
+  Make soft, not bullshit.
