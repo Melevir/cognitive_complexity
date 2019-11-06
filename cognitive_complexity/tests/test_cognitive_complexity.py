@@ -68,13 +68,13 @@ def test_very_nested_structure_condition_complexity():
 def test_try_condition_complexity():
     assert get_code_snippet_compexity("""
     def f(a, b):
-        try:  # +1
-            if a > 0:  # +2
+        try:
+            for foo in bar:  # +1
                 return a
-        except Exception:
+        except Exception:  # +1
             if a < 0:  # +2
                 return a
-    """) == 5
+    """) == 4
 
 
 def test_recursion_complexity():

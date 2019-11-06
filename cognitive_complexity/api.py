@@ -1,7 +1,7 @@
 import ast
 
 from cognitive_complexity.common_types import AnyFuncdef
-from cognitive_complexity.utils.ast import has_recursive_calls
+from cognitive_complexity.utils.ast import has_recursive_calls, process_child_nodes
 
 
 def get_cognitive_complexity(funcdef: AnyFuncdef) -> int:
@@ -16,14 +16,12 @@ def get_cognitive_complexity(funcdef: AnyFuncdef) -> int:
 def get_cognitive_complexity_for_node(
         node: ast.AST,
         increment_by: int = 0,
-        verbose: bool = False,
+        verbose: bool = True,
 ) -> int:
     control_flow_breakers = (
         ast.If,
         ast.For,
         ast.While,
-        ast.While,
-        ast.Try,
     )
 
     base_complexity = 0
@@ -38,10 +36,11 @@ def get_cognitive_complexity_for_node(
         should_iter_children = False
 
     if should_iter_children:
-        child_nodes = ast.iter_child_nodes(node)
-        child_complexity += sum(
-            get_cognitive_complexity_for_node(n, increment_by=increment_by)
-            for n in child_nodes
+        child_complexity += process_child_nodes(
+            node,
+            increment_by,
+            verbose,
+            get_cognitive_complexity_for_node,
         )
 
     complexity = base_complexity + child_complexity
