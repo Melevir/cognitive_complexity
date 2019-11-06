@@ -112,3 +112,14 @@ def test_break_and_continue():
             if a == 8:  # +2
                 break  # +2
     """) == 9
+
+
+def test_nested_functions():
+    assert get_code_snippet_compexity("""
+    def f(a):
+        def foo(a):
+            if a:  # +2
+                return 1
+        bar = lambda a: lambda b: b or 2  # +2 (+2 for or because lambda increases nesting)
+        return bar(foo(a))(a)
+    """) == 4
