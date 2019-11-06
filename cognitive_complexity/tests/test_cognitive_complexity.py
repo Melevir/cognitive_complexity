@@ -101,3 +101,14 @@ def test_real_function():
                     processed_words.append(word.lower())
         return processed_words, raw_camelcase_words
     """) == 10
+
+
+def test_break_and_continue():
+    assert get_code_snippet_compexity("""
+    def f(a):
+        for a in range(10):  # +1
+            if a % 2:  # +2
+                continue  # +2
+            if a == 8:  # +2
+                break  # +2
+    """) == 9

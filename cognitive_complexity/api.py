@@ -34,6 +34,8 @@ def get_cognitive_complexity_for_node(
         inner_boolops_amount = len([n for n in ast.walk(node) if isinstance(n, ast.BoolOp)])
         base_complexity += inner_boolops_amount * increment_by
         should_iter_children = False
+    elif isinstance(node, (ast.Break, ast.Continue)):
+        base_complexity += max(1, increment_by)
 
     if should_iter_children:
         child_complexity += process_child_nodes(
