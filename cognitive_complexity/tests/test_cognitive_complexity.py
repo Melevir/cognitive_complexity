@@ -82,3 +82,22 @@ def test_recursion_complexity():
     def f(a):
         return a * f(a - 1)  # +1 for recursion
     """) == 1
+
+
+def test_real_function():
+    assert get_code_snippet_compexity("""
+    def process_raw_constant(constant, min_word_length):
+        processed_words = []
+        raw_camelcase_words = []
+        for raw_word in re.findall(r'[a-z]+', constant):  # +1
+            word = raw_word.strip()
+            if (  # +2
+                len(word) >= min_word_length  # +4 (2 bool operator sequences * 2 for nesting)
+                and not (word.startswith('-') or word.endswith('-'))
+            ):
+                if is_camel_case_word(word):  # +2
+                    raw_camelcase_words.append(word)
+                else:
+                    processed_words.append(word.lower())
+        return processed_words, raw_camelcase_words
+    """) == 10
