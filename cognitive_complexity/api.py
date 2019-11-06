@@ -22,6 +22,7 @@ def get_cognitive_complexity_for_node(
         ast.If,
         ast.For,
         ast.While,
+        ast.IfExp,
     )
     incrementers_nodes = (
         ast.FunctionDef,

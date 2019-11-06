@@ -123,3 +123,12 @@ def test_nested_functions():
         bar = lambda a: lambda b: b or 2  # +2 (+2 for or because lambda increases nesting)
         return bar(foo(a))(a)
     """) == 4
+
+
+def test_ternary_operator():
+    assert get_code_snippet_compexity("""
+    def f(a):
+        if a % 2:  # +1
+            return 'c' if a else 'd'  # +2
+        return 'a' if a else 'b'  # +1
+    """) == 4
