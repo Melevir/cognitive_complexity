@@ -1,4 +1,4 @@
-from cognitive_complexity.tests.conftest import get_code_snippet_compexity
+from conftest import get_code_snippet_compexity
 
 
 def test_simple_if_simple_condition_complexity():
