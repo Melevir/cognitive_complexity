@@ -1,6 +1,6 @@
 import ast
 
-from typing import Callable, Tuple
+from typing import Callable, Tuple, Union
 
 from cognitive_complexity.common_types import AnyFuncdef
 
@@ -40,6 +40,28 @@ def process_child_nodes(
     return child_complexity
 
 
+def process_control_flow_breaker(
+    node: Union[ast.If, ast.For, ast.While, ast.IfExp],
+    increment_by: int,
+) -> Tuple[int, int, bool]:
+    if isinstance(node, ast.IfExp):
+        # C if A else B; ternary operator equivalent
+        increment = 0
+        increment_by += 1
+    elif isinstance(node, ast.If) and len(node.orelse) == 1 and isinstance(node.orelse[0], ast.If):
+        # node is an elif; the increment will be counted on the ast.If
+        increment = 0
+    elif node.orelse:
+        # +1 for the else and add a nesting level
+        increment = 1
+        increment_by += 1
+    else:
+        # no 'else' to count, just add a nesting level
+        increment = 0
+        increment_by += 1
+    return increment_by, max(1, increment_by) + increment, True
+
+
 def process_node_itself(
     node: ast.AST,
     increment_by: int,
@@ -57,8 +79,7 @@ def process_node_itself(
     )
 
     if isinstance(node, control_flow_breakers):
-        increment_by += 1
-        return increment_by, max(1, increment_by), True
+        return process_control_flow_breaker(node, increment_by)
     elif isinstance(node, incrementers_nodes):
         increment_by += 1
         return increment_by, 0, True
