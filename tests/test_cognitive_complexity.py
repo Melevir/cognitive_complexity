@@ -46,6 +46,28 @@ def test_simple_structure_condition_complexity():
     """) == 2
 
 
+def test_simple_elif_condition_complexity():
+    assert get_code_snippet_compexity("""
+    def f(a, b):
+        if (a):  # +1
+            return 1
+        elif (b):  # +1
+            return 2
+        else:  # +1
+            return 3
+    """) == 3
+
+
+def test_simple_else_condition_complexity():
+    assert get_code_snippet_compexity("""
+    def f(a):
+        if (a):  # +1
+            return 1
+        else:  # +1
+            return 3
+    """) == 2
+
+
 def test_nested_structure_condition_complexity():
     assert get_code_snippet_compexity("""
     def f(a, b):
@@ -97,10 +119,10 @@ def test_real_function():
             ):
                 if is_camel_case_word(word):  # +2
                     raw_camelcase_words.append(word)
-                else:
+                else:  # +1
                     processed_words.append(word.lower())
         return processed_words, raw_camelcase_words
-    """) == 10
+    """) == 11
 
 
 def test_break_and_continue():
@@ -132,3 +154,67 @@ def test_ternary_operator():
             return 'c' if a else 'd'  # +2
         return 'a' if a else 'b'  # +1
     """) == 4
+
+
+def test_nested_if_condition_complexity():
+    assert get_code_snippet_compexity("""
+    def f(a, b):
+        if a == b:  # +1
+            if (a):  # +2 (nesting=1)
+                return 1
+        return 0
+    """) == 3
+
+
+def test_nested_else_condition_complexity():
+    assert get_code_snippet_compexity("""
+    def f(a, b):
+        if a == b:  # +1
+            if (a):  # +2 (nesting=1)
+                return 1
+            else:  # +1
+                return 3
+        return 0
+    """) == 4
+
+
+def test_nested_elif_condition_complexity():
+    assert get_code_snippet_compexity("""
+    def f(a, b):
+        if a == b:  # +1
+            if (a):  # +2 (nesting=1)
+                return 1
+            elif (b):  # +1
+                return 2
+            else:  # +1
+                return 3
+        return 0
+    """) == 5
+
+
+def test_for_else_complexity():
+    assert get_code_snippet_compexity("""
+    def f(a):
+        for a in range(10):  # +1
+            if a % 2:  # +2
+                continue  # +2
+            if a == 8:  # +2
+                break  # +2
+        else:  # +1
+            return 5
+    """) == 10
+
+
+def test_while_else_complexity():
+    assert get_code_snippet_compexity("""
+    def f(a):
+        a = 0
+        while a < 10:  # +1
+            if a % 2:  # +2
+                continue  # +2
+            if a == 8:  # +2
+                break  # +2
+            a += 1
+        else:  # +1
+            return 5
+    """) == 10
