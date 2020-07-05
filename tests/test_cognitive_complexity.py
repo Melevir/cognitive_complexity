@@ -130,10 +130,10 @@ def test_break_and_continue():
     def f(a):
         for a in range(10):  # +1
             if a % 2:  # +2
-                continue  # +2
+                continue
             if a == 8:  # +2
-                break  # +2
-    """) == 9
+                break
+    """) == 5
 
 
 def test_nested_functions():
@@ -197,12 +197,12 @@ def test_for_else_complexity():
     def f(a):
         for a in range(10):  # +1
             if a % 2:  # +2
-                continue  # +2
+                continue
             if a == 8:  # +2
-                break  # +2
+                break
         else:  # +1
             return 5
-    """) == 10
+    """) == 6
 
 
 def test_while_else_complexity():
@@ -211,10 +211,10 @@ def test_while_else_complexity():
         a = 0
         while a < 10:  # +1
             if a % 2:  # +2
-                continue  # +2
+                continue
             if a == 8:  # +2
-                break  # +2
+                break
             a += 1
         else:  # +1
             return 5
-    """) == 10
+    """) == 6
