@@ -85,7 +85,7 @@ def process_node_itself(
         return increment_by, 0, True
     elif isinstance(node, ast.BoolOp):
         inner_boolops_amount = len([n for n in ast.walk(node) if isinstance(n, ast.BoolOp)])
-        base_complexity = inner_boolops_amount * max(increment_by, 1)
+        base_complexity = inner_boolops_amount
         return increment_by, base_complexity, False
     elif isinstance(node, (ast.Break, ast.Continue)):
         return increment_by, max(1, increment_by), True

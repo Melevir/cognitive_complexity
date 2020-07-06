@@ -113,16 +113,16 @@ def test_real_function():
         raw_camelcase_words = []
         for raw_word in re.findall(r'[a-z]+', constant):  # +1
             word = raw_word.strip()
-            if (  # +2
-                len(word) >= min_word_length  # +4 (2 bool operator sequences * 2 for nesting)
+            if (  # +2 (nesting = 1)
+                len(word) >= min_word_length  # +2 (2 bool operator sequences)
                 and not (word.startswith('-') or word.endswith('-'))
             ):
-                if is_camel_case_word(word):  # +2
+                if is_camel_case_word(word):  # +3 (nesting=2)
                     raw_camelcase_words.append(word)
                 else:  # +1
                     processed_words.append(word.lower())
         return processed_words, raw_camelcase_words
-    """) == 11
+    """) == 9
 
 
 def test_break_and_continue():
@@ -142,9 +142,9 @@ def test_nested_functions():
         def foo(a):
             if a:  # +2
                 return 1
-        bar = lambda a: lambda b: b or 2  # +2 (+2 for or because lambda increases nesting)
+        bar = lambda a: lambda b: b or 2  # +1
         return bar(foo(a))(a)
-    """) == 4
+    """) == 3
 
 
 def test_ternary_operator():
