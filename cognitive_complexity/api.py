@@ -2,11 +2,14 @@ import ast
 
 from cognitive_complexity.common_types import AnyFuncdef
 from cognitive_complexity.utils.ast import (
-    has_recursive_calls, process_child_nodes, process_node_itself,
+    has_recursive_calls, is_decorator, process_child_nodes, process_node_itself,
 )
 
 
 def get_cognitive_complexity(funcdef: AnyFuncdef) -> int:
+    if is_decorator(funcdef):
+        return get_cognitive_complexity(funcdef.body[0])  # type: ignore
+
     complexity = 0
     for node in funcdef.body:
         complexity += get_cognitive_complexity_for_node(node)

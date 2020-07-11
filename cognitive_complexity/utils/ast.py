@@ -16,6 +16,15 @@ def has_recursive_calls(funcdef: AnyFuncdef) -> bool:
     ])
 
 
+def is_decorator(funcdef: AnyFuncdef) -> bool:
+    return (
+        isinstance(funcdef, ast.FunctionDef)
+        and len(funcdef.body) == 2
+        and isinstance(funcdef.body[0], ast.FunctionDef)
+        and isinstance(funcdef.body[1], ast.Return)
+    )
+
+
 def process_child_nodes(
     node: ast.AST,
     increment_by: int,

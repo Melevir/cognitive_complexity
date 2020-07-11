@@ -218,3 +218,39 @@ def test_while_else_complexity():
         else:  # +1
             return 5
     """) == 6
+
+
+def test_a_decorator_complexity():
+    assert get_code_snippet_compexity("""
+    def a_decorator(a, b):
+        def inner(func):  # nesting = 0
+            if condition:  # +1
+                print(b)
+            func()
+        return inner
+    """) == 1
+
+
+def test_not_a_decorator_complexity():
+    assert get_code_snippet_compexity("""
+    def not_a_decorator(a, b):
+        my_var = a*b
+        def inner(func):  # nesting = 1
+            if condition:  # +1 structure, +1 nesting
+                print(b)
+            func()
+        return inner
+    """) == 2
+
+
+def test_decorator_generator_complexity():
+    assert get_code_snippet_compexity("""
+    def decorator_generator(a):
+        def generator(func):
+            def decorator(func): # nesting = 0
+                if condition: # +1
+                    print(b)
+                return func()
+            return decorator
+        return generator
+    """) == 1
