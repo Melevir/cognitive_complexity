@@ -18,7 +18,7 @@ def get_cognitive_complexity(funcdef: AnyFuncdef) -> int:
 def get_cognitive_complexity_for_node(
         node: ast.AST,
         increment_by: int = 0,
-        verbose: bool = True,
+        verbose: bool = False,
 ) -> int:
 
     increment_by, base_complexity, should_iter_children = process_node_itself(node, increment_by)
