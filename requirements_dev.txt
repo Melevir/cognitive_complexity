@@ -19,7 +19,7 @@ flake8-quotes==3.0.0
 flake8-string-format==0.3.0
 flake8-todo==0.7
 flake8-variables-names==0.0.3
-pytest-6.2.2
+pytest==6.2.2
 pytest-cov==2.6.1
 attrs==20.3.0
 astpretty==1.6.0
