@@ -21,7 +21,7 @@ flake8-todo==0.7
 flake8-variables-names==0.0.3
 pytest==4.2.0
 pytest-cov==2.6.1
-attrs==19.1.0
+attrs==19.2.0
 astpretty==1.6.0
 pydocstyle==5.0.2
 flake8-2020==1.6.0
