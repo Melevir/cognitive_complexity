@@ -31,7 +31,13 @@ pip install cognitive_complexity
 
 ### Flake8-Cognitive-Complexity Extension
 
-Perhaps the most common way to use this library (especially if you are already using the [Flake8 linter](https://flake8.pycqa.org/en/latest/)) is to use the [flake8-cognitive-complexity extension](https://github.com/Melevir/flake8-cognitive-complexity). If you run Flake8 with this extension installed, Flake8 will let you know if your code is too complex. For more details and documentation, visit the [flake8-cognitive-complexity extension repository](https://github.com/Melevir/flake8-cognitive-complexity).
+Perhaps the most common way to use this library (especially if you are
+already using the [Flake8 linter](https://flake8.pycqa.org/en/latest/))
+is to use the
+[flake8-cognitive-complexity extension](https://github.com/Melevir/flake8-cognitive-complexity).
+If you run Flake8 with this extension installed, Flake8 will let you know
+if your code is too complex. For more details and documentation, visit the
+[flake8-cognitive-complexity extension repository](https://github.com/Melevir/flake8-cognitive-complexity).
 
 ## What is cognitive complexity
 
