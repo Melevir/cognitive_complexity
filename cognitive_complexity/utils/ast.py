@@ -33,14 +33,7 @@ def process_child_nodes(
 ) -> int:
     child_complexity = 0
     child_nodes = ast.iter_child_nodes(node)
-
-    for node_num, child_node in enumerate(child_nodes):
-        if isinstance(node, ast.Try):
-            if node_num == 1:
-                # add +1 for all try nodes except body
-                increment_by += 1
-            if node_num:
-                child_complexity += max(1, increment_by)
+    for child_node in child_nodes:
         child_complexity += complexity_calculator(
             child_node,
             increment_by=increment_by,
@@ -50,7 +43,7 @@ def process_child_nodes(
 
 
 def process_control_flow_breaker(
-    node: Union[ast.If, ast.For, ast.While, ast.IfExp],
+    node: Union[ast.If, ast.For, ast.While, ast.IfExp, ast.ExceptHandler],
     increment_by: int,
 ) -> Tuple[int, int, bool]:
     if isinstance(node, ast.IfExp):
@@ -60,6 +53,10 @@ def process_control_flow_breaker(
     elif isinstance(node, ast.If) and len(node.orelse) == 1 and isinstance(node.orelse[0], ast.If):
         # node is an elif; the increment will be counted on the ast.If
         increment = 0
+    elif isinstance(node, ast.ExceptHandler):
+        # +1 for the catch/except-handler
+        increment = 0
+        increment_by += 1
     elif node.orelse:
         # +1 for the else and add a nesting level
         increment = 1
@@ -80,6 +77,7 @@ def process_node_itself(
         ast.For,
         ast.While,
         ast.IfExp,
+        ast.ExceptHandler,
     )
     incrementers_nodes = (
         ast.FunctionDef,
