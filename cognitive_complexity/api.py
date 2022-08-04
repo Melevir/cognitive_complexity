@@ -12,7 +12,7 @@ def get_cognitive_complexity(funcdef: AnyFuncdef) -> int:
 
     complexity = 0
     for node in funcdef.body:
-        complexity += get_cognitive_complexity_for_node(node, verbose=True)
+        complexity += get_cognitive_complexity_for_node(node)
     if has_recursive_calls(funcdef):
         complexity += 1
     return complexity
