@@ -9,6 +9,14 @@ def test_simple_if_simple_condition_complexity():
     """) == 1
 
 
+def test_simple_if_simple_condition_complexity_with_print():
+    assert get_code_snippet_compexity("""
+    def f(a, b):
+        if a:  # +1
+            print('1')
+    """) == 1
+
+
 def test_simple_if_serial_condition_complexity():
     assert get_code_snippet_compexity("""
     def f(a, b):
@@ -87,16 +95,41 @@ def test_very_nested_structure_condition_complexity():
     """) == 6
 
 
-def test_try_condition_complexity():
+def test_try_condition_complexity_simple():
+    assert get_code_snippet_compexity("""
+    def f():
+        try:
+            print('hello1')
+        except Exception:  # +1
+            print('goodbye')
+    """) == 1
+
+
+def test_try_condition_complexity_with_multiple_lines():
+    assert get_code_snippet_compexity("""
+    def f(a, b):
+        try:
+            print('hello1')
+            print('hello2')
+            print('hello3')
+            print('hello4')
+            print('hello5')
+        except Exception:  # +1
+            print('goodbye')
+    """) == 1
+
+
+def test_try_condition_complexity_with_nesting():
     assert get_code_snippet_compexity("""
     def f(a, b):
         try:
             for foo in bar:  # +1
-                return a
+                if a > 0:  # +2
+                    return a
         except Exception:  # +1
             if a < 0:  # +2
                 return a
-    """) == 4
+    """) == 6
 
 
 def test_recursion_complexity():
@@ -123,6 +156,28 @@ def test_real_function():
                     processed_words.append(word.lower())
         return processed_words, raw_camelcase_words
     """) == 9
+
+
+def test_real_function_with_try():
+    assert get_code_snippet_compexity("""
+    def process_raw_constant(constant, min_word_length):
+        try:
+            processed_words = []
+            raw_camelcase_words = []
+            for raw_word in re.findall(r'[a-z]+', constant):  # +1
+                word = raw_word.strip()
+                if (  # +2 (nesting = 1)
+                    len(word) >= min_word_length  # +2 (2 bool operator sequences)
+                    and not (word.startswith('-') or word.endswith('-'))
+                ):
+                    if is_camel_case_word(word):  # +3 (nesting=2)
+                        raw_camelcase_words.append(word)
+                    else:  # +1
+                        processed_words.append(word.lower())
+            return processed_words, raw_camelcase_words
+        except Exception as exp:  # +1
+            return 1
+    """) == 9 + 1
 
 
 def test_break_and_continue():
